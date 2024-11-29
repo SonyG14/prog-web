@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form id="loginForm">
+            <p>Авторизація</p>
+            <label for="email">Електронна пошта:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Увійти</button>
+        </form>
+        <div id="error"></div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#loginForm').on('submit', function(e){
+                e.preventDefault();
+                var email = $('#email').val();
+                var password = $('#password').val();
+
+                // AJAX запит для входу
+                $.ajax({
+                        url: 'login.php',
+                        type: 'POST',
+                        data: { email: email, password: password },
+                        success: function(response) {
+                            if (response.trim() === 'success') {
+                                window.location.href = 'account.html';
+                            } else {
+                                $('#error').text(response);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Помилка AJAX:', status, error);
+                            $('#error').text('Виникла проблема зі з’єднанням із сервером.');
+                        }
+                    });
+
+                });
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Особистий кабінет</title>
+    <link rel="stylesheet" href="account.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="content">
+ <p class='welcome'>Привіт $username!</p>
+    <div class="personal_office">
+        <h1>Kабінет</h1>
+        <form id="changeName" method="post">
+            <p>Змінити ім'я</p>
+            <input type="text" name="name" value=" ">
+            <input type="submit" name="save_name" value="Зберегти"><br>
+            <span class="error-message" id="nameError" style="display: none; color: red;"></span>
+        </form>
+        <form id="changeEmail" method="post">
+            <p>Змінити пошту</p>
+            <input type="text" name="email" value=" ">
+            <input type="submit" name="save_email" value="Зберегти"><br>
+            <span class="error-message" id="emailError" style="display: none; color: red;"></span>
+        </form>
+        <form id="changePassword" method="post">
+            <p>Змінити пароль</p>
+            <input type="password" name="password">
+            <input type="submit" name="save_password" value="Зберегти"><br>
+            <span class="error-message" id="passwordError" style="display: none; color: red;"></span>
+        </form>
+            <input type="submit" name="logout" value="Вийти">
+    </div>
+</div>
+
+<script>
+    $("#changeName").submit(function(event) {
+        let valid = true;
+        $(".error-message").text("").hide();
+
+        const name = $("input[name='name']").val();
+        if (name === "") {
+            $("#nameError").text("Ім'я не може бути порожнім.").show();
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+    $("#changeEmail").submit(function(event) {
+        let valid = true;
+        $(".error-message").text("").hide();
+
+        const email = $("input[name='email']").val();
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (email === "") {
+            $("#emailError").text("Електронна пошта не може бути порожньою.").show();
+            valid = false;
+        } else if (!emailPattern.test(email)) {
+            $("#emailError").text("Неправильний формат електронної пошти.").show();
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+    $("#changePassword").submit(function(event) {
+        let valid = true;
+        $(".error-message").text("").hide();
+
+        const password = $("input[name='password']").val();
+        if (password === "") {
+            $("#passwordError").text("Пароль не може бути порожнім.").show();
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+</script>
+</body>
+
